@@ -1,0 +1,28 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    ProductKeywordBundle\:
+        resource: '../src/'
+        exclude:
+            - '../src/DependencyInjection/'
+            - '../src/Entity/'
+            - '../src/Exception/'
+            - '../src/Event/'
+            - '../src/DTO/'
+            - '../src/ProductKeywordBundle.php'
+
+    # 接口绑定
+    ProductKeywordBundle\Interface\KeywordManagerInterface:
+        alias: ProductKeywordBundle\Service\KeywordManager
+
+    ProductKeywordBundle\Interface\SearchLoggerInterface:
+        alias: ProductKeywordBundle\Service\SearchLogger
+
+    ProductKeywordBundle\Interface\SearchAnalyzerInterface:
+        alias: ProductKeywordBundle\Service\SearchAnalyzer
+
+    ProductKeywordBundle\Interface\SearchOptimizerInterface:
+        alias: ProductKeywordBundle\Service\SearchOptimizer
