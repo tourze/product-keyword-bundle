@@ -95,5 +95,4 @@ final class ProductKeywordCrudControllerTest extends AbstractEasyAdminController
         // self::assertResponseStatusCodeSame(422);
         // self::assertStringContainsString('should not be blank', $crawler->filter('.invalid-feedback')->text());
     }
-
 }

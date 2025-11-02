@@ -227,7 +227,6 @@ final class ProductKeywordCrudController extends AbstractCrudController
         return $parent->getKeyword() ?? '-';
     }
 
-
     private function formatStringUser(mixed $value): string
     {
         if (null === $value || '' === $value) {

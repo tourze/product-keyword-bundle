@@ -355,7 +355,6 @@ final class KeywordCrudController extends AbstractCrudController
         return sprintf('%d 个', $count);
     }
 
-
     private function formatStringUser(mixed $value): string
     {
         if (null === $value || '' === $value) {

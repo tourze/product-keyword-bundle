@@ -9,6 +9,7 @@ use ProductKeywordBundle\Controller\Admin\KeywordCrudController;
 use ProductKeywordBundle\Entity\Keyword;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Symfony\Component\Security\Core\User\InMemoryUser;
 use Tourze\PHPUnitSymfonyWebTest\AbstractEasyAdminControllerTestCase;
 
 /**
@@ -18,8 +19,21 @@ use Tourze\PHPUnitSymfonyWebTest\AbstractEasyAdminControllerTestCase;
 #[RunTestsInSeparateProcesses]
 final class KeywordCrudControllerTest extends AbstractEasyAdminControllerTestCase
 {
+    private function ensureUploadDirectoryExists(): void
+    {
+        // 先尝试从已启动的内核获取项目目录
+        $kernel = self::$kernel ?? self::bootKernel();
+        $projectDir = $kernel->getProjectDir();
+        $uploadDir = $projectDir . '/public/uploads/keyword';
+
+        if (!is_dir($uploadDir)) {
+            mkdir($uploadDir, 0o755, true);
+        }
+    }
+
     public function testUnauthenticatedAccessRedirects(): void
     {
+        $this->ensureUploadDirectoryExists();
         $client = self::createClientWithDatabase();
 
         $client->catchExceptions(false);
@@ -30,6 +44,7 @@ final class KeywordCrudControllerTest extends AbstractEasyAdminControllerTestCas
 
     public function testIndexActionReturnsResponse(): void
     {
+        $this->ensureUploadDirectoryExists();
         $client = self::createAuthenticatedClient();
 
         $client->request('GET', '/admin/product-keyword/keyword');
@@ -44,7 +59,9 @@ final class KeywordCrudControllerTest extends AbstractEasyAdminControllerTestCas
      */
     public function testEnableKeywordAction(): void
     {
+        $this->ensureUploadDirectoryExists();
         $client = self::createAuthenticatedClient();
+        $admin = new InMemoryUser('admin', 'password', ['ROLE_ADMIN']);
 
         // 创建一个禁用的关键词
         $keyword = new Keyword();
@@ -62,7 +79,6 @@ final class KeywordCrudControllerTest extends AbstractEasyAdminControllerTestCas
         $doctrine = $container->get('doctrine');
         $this->assertInstanceOf(Registry::class, $doctrine);
         $em = $doctrine->getManager();
-        $em->persist($admin);
         $em->persist($keyword);
         $em->flush();
 
@@ -83,7 +99,9 @@ final class KeywordCrudControllerTest extends AbstractEasyAdminControllerTestCas
      */
     public function testDisableKeywordAction(): void
     {
+        $this->ensureUploadDirectoryExists();
         $client = self::createAuthenticatedClient();
+        $admin = new InMemoryUser('admin', 'password', ['ROLE_ADMIN']);
 
         // 创建一个启用的关键词
         $keyword = new Keyword();
@@ -101,7 +119,6 @@ final class KeywordCrudControllerTest extends AbstractEasyAdminControllerTestCas
         $doctrine = $container->get('doctrine');
         $this->assertInstanceOf(Registry::class, $doctrine);
         $em = $doctrine->getManager();
-        $em->persist($admin);
         $em->persist($keyword);
         $em->flush();
 
@@ -122,7 +139,9 @@ final class KeywordCrudControllerTest extends AbstractEasyAdminControllerTestCas
      */
     public function testRecommendKeywordAction(): void
     {
+        $this->ensureUploadDirectoryExists();
         $client = self::createAuthenticatedClient();
+        $admin = new InMemoryUser('admin', 'password', ['ROLE_ADMIN']);
 
         // 创建一个非推荐关键词
         $keyword = new Keyword();
@@ -140,7 +159,6 @@ final class KeywordCrudControllerTest extends AbstractEasyAdminControllerTestCas
         $doctrine = $container->get('doctrine');
         $this->assertInstanceOf(Registry::class, $doctrine);
         $em = $doctrine->getManager();
-        $em->persist($admin);
         $em->persist($keyword);
         $em->flush();
 
@@ -161,7 +179,9 @@ final class KeywordCrudControllerTest extends AbstractEasyAdminControllerTestCas
      */
     public function testUnrecommendKeywordAction(): void
     {
+        $this->ensureUploadDirectoryExists();
         $client = self::createAuthenticatedClient();
+        $admin = new InMemoryUser('admin', 'password', ['ROLE_ADMIN']);
 
         // 创建一个推荐关键词
         $keyword = new Keyword();
@@ -179,7 +199,6 @@ final class KeywordCrudControllerTest extends AbstractEasyAdminControllerTestCas
         $doctrine = $container->get('doctrine');
         $this->assertInstanceOf(Registry::class, $doctrine);
         $em = $doctrine->getManager();
-        $em->persist($admin);
         $em->persist($keyword);
         $em->flush();
 
