@@ -30,9 +30,7 @@ final class KeywordCrudControllerTest extends AbstractEasyAdminControllerTestCas
 
     public function testIndexActionReturnsResponse(): void
     {
-        $client = self::createClientWithDatabase();
-        $admin = $this->createAdminUser('admin@test.com', 'admin123');
-        $this->loginAsAdmin($client, 'admin@test.com', 'admin123');
+        $client = self::createAuthenticatedClient();
 
         $client->request('GET', '/admin/product-keyword/keyword');
 
@@ -46,9 +44,7 @@ final class KeywordCrudControllerTest extends AbstractEasyAdminControllerTestCas
      */
     public function testEnableKeywordAction(): void
     {
-        $client = self::createClientWithDatabase();
-        $admin = $this->createAdminUser('admin@test.com', 'admin123');
-        $this->loginAsAdmin($client, 'admin@test.com', 'admin123');
+        $client = self::createAuthenticatedClient();
 
         // 创建一个禁用的关键词
         $keyword = new Keyword();
@@ -87,9 +83,7 @@ final class KeywordCrudControllerTest extends AbstractEasyAdminControllerTestCas
      */
     public function testDisableKeywordAction(): void
     {
-        $client = self::createClientWithDatabase();
-        $admin = $this->createAdminUser('admin@test.com', 'admin123');
-        $this->loginAsAdmin($client, 'admin@test.com', 'admin123');
+        $client = self::createAuthenticatedClient();
 
         // 创建一个启用的关键词
         $keyword = new Keyword();
@@ -128,9 +122,7 @@ final class KeywordCrudControllerTest extends AbstractEasyAdminControllerTestCas
      */
     public function testRecommendKeywordAction(): void
     {
-        $client = self::createClientWithDatabase();
-        $admin = $this->createAdminUser('admin@test.com', 'admin123');
-        $this->loginAsAdmin($client, 'admin@test.com', 'admin123');
+        $client = self::createAuthenticatedClient();
 
         // 创建一个非推荐关键词
         $keyword = new Keyword();
@@ -169,9 +161,7 @@ final class KeywordCrudControllerTest extends AbstractEasyAdminControllerTestCas
      */
     public function testUnrecommendKeywordAction(): void
     {
-        $client = self::createClientWithDatabase();
-        $admin = $this->createAdminUser('admin@test.com', 'admin123');
-        $this->loginAsAdmin($client, 'admin@test.com', 'admin123');
+        $client = self::createAuthenticatedClient();
 
         // 创建一个推荐关键词
         $keyword = new Keyword();
