@@ -28,9 +28,7 @@ final class ProductKeywordCrudControllerTest extends AbstractEasyAdminController
 
     public function testIndexActionReturnsResponse(): void
     {
-        $client = self::createClientWithDatabase();
-        $admin = $this->createAdminUser('admin@test.com', 'admin123');
-        $this->loginAsAdmin($client, 'admin@test.com', 'admin123');
+        $client = self::createAuthenticatedClient();
 
         $client->request('GET', '/admin/product-keyword/relation');
 
