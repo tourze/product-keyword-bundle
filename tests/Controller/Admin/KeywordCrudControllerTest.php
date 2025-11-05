@@ -3,6 +3,7 @@
 namespace ProductKeywordBundle\Tests\Controller\Admin;
 
 use Doctrine\Bundle\DoctrineBundle\Registry;
+use PHPUnit\Framework\Attributes\Before;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 use ProductKeywordBundle\Controller\Admin\KeywordCrudController;
@@ -19,7 +20,8 @@ use Tourze\PHPUnitSymfonyWebTest\AbstractEasyAdminControllerTestCase;
 #[RunTestsInSeparateProcesses]
 final class KeywordCrudControllerTest extends AbstractEasyAdminControllerTestCase
 {
-    private function ensureUploadDirectoryExists(): void
+    #[Before]
+    protected function ensureUploadDirectoryExists(): void
     {
         // 先尝试从已启动的内核获取项目目录
         $kernel = self::$kernel ?? self::bootKernel();
@@ -33,7 +35,6 @@ final class KeywordCrudControllerTest extends AbstractEasyAdminControllerTestCas
 
     public function testUnauthenticatedAccessRedirects(): void
     {
-        $this->ensureUploadDirectoryExists();
         $client = self::createClientWithDatabase();
 
         $client->catchExceptions(false);
@@ -44,7 +45,6 @@ final class KeywordCrudControllerTest extends AbstractEasyAdminControllerTestCas
 
     public function testIndexActionReturnsResponse(): void
     {
-        $this->ensureUploadDirectoryExists();
         $client = self::createAuthenticatedClient();
 
         $client->request('GET', '/admin/product-keyword/keyword');
@@ -59,7 +59,6 @@ final class KeywordCrudControllerTest extends AbstractEasyAdminControllerTestCas
      */
     public function testEnableKeywordAction(): void
     {
-        $this->ensureUploadDirectoryExists();
         $client = self::createAuthenticatedClient();
         $admin = new InMemoryUser('admin', 'password', ['ROLE_ADMIN']);
 
@@ -99,7 +98,6 @@ final class KeywordCrudControllerTest extends AbstractEasyAdminControllerTestCas
      */
     public function testDisableKeywordAction(): void
     {
-        $this->ensureUploadDirectoryExists();
         $client = self::createAuthenticatedClient();
         $admin = new InMemoryUser('admin', 'password', ['ROLE_ADMIN']);
 
@@ -139,7 +137,6 @@ final class KeywordCrudControllerTest extends AbstractEasyAdminControllerTestCas
      */
     public function testRecommendKeywordAction(): void
     {
-        $this->ensureUploadDirectoryExists();
         $client = self::createAuthenticatedClient();
         $admin = new InMemoryUser('admin', 'password', ['ROLE_ADMIN']);
 
@@ -179,7 +176,6 @@ final class KeywordCrudControllerTest extends AbstractEasyAdminControllerTestCas
      */
     public function testUnrecommendKeywordAction(): void
     {
-        $this->ensureUploadDirectoryExists();
         $client = self::createAuthenticatedClient();
         $admin = new InMemoryUser('admin', 'password', ['ROLE_ADMIN']);
 
