@@ -74,8 +74,6 @@ final class AdminMenuTest extends AbstractEasyAdminMenuTestCase
             ->with('icon', 'fas fa-tags')
             ->willReturn($keywordMenu) // 链式调用需要返回自身
         ;
-
-        // @phpstan-ignore-next-line method.notFound, method.nonObject
         $this->linkGenerator->expects($this->exactly(3))
             ->method('getCurdListPage')
             ->willReturnMap([
@@ -158,8 +156,6 @@ final class AdminMenuTest extends AbstractEasyAdminMenuTestCase
             ->with('关键词管理')
             ->willReturn($keywordMenu)
         ;
-
-        // @phpstan-ignore-next-line method.notFound, method.nonObject
         $this->linkGenerator->expects($this->exactly(3))
             ->method('getCurdListPage')
             ->willReturnMap([
@@ -222,8 +218,6 @@ final class AdminMenuTest extends AbstractEasyAdminMenuTestCase
             ->method('addChild')
             ->with('商品管理')
         ;
-
-        // @phpstan-ignore-next-line method.notFound
         $this->linkGenerator->expects($this->never())
             ->method('getCurdListPage')
         ;
@@ -252,8 +246,6 @@ final class AdminMenuTest extends AbstractEasyAdminMenuTestCase
             ->method('addChild')
             ->with('关键词管理')
         ;
-
-        // @phpstan-ignore-next-line method.notFound
         $this->linkGenerator->expects($this->never())
             ->method('getCurdListPage')
         ;

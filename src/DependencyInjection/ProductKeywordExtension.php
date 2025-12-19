@@ -4,7 +4,7 @@ namespace ProductKeywordBundle\DependencyInjection;
 
 use Tourze\SymfonyDependencyServiceLoader\AutoExtension;
 
-class ProductKeywordExtension extends AutoExtension
+final class ProductKeywordExtension extends AutoExtension
 {
     protected function getConfigDir(): string
     {
